@@ -60,13 +60,9 @@ export default class App extends Component {
     }
     
     onLoadMore = () => {
-        if (this.state.limit < this.getFilterData().length) {
-            this.setState({
-                limit: this.state.limit + 10
-            });
-        } else {
-            return alert("Sorry, this is end of list");
-        }
+        this.setState({
+            limit: this.state.limit + 10
+        });
     }
     
     onSearch = (event) => {
@@ -82,7 +78,10 @@ export default class App extends Component {
                 <header>
                     <h1 className = "header"> Post List </h1>
                 </header>
-                <Search onSearch = {this.onSearch}/>
+                <Search 
+                    onSearch = {this.onSearch}
+                    value = {this.state.search}
+                />
                 <PostList 
                     getRenderList = {this.getRenderList}
                     isLoading = {this.state.isLoading}
