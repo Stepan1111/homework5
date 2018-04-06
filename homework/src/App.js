@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import PostListItem from './Component/postListItem.js';
-import MoreButton from './Component/moreButton.js';
-import PostList from './Component/postList.js';
-import Search from './Component/search.js';
-import FetchData from './data.js';
+import PostListItem from './Component/PostListItem.js';
+import MoreButton from './Component/MoreButton.js';
+import PostList from './Component/PostList.js';
+import Search from './Component/Search.js';
+import FetchData from './Data.js';
 
 import  './App.css';
 
@@ -38,15 +38,15 @@ export default class App extends Component {
                this.state.isLoading !== nextState.isLoading)
     }
     
-    filterData = () => {
+    getFilterData = () => {
         return this.state.posts.filter((item) => {
             return item.title.toLowerCase().search(this.state.search.toLowerCase()) > -1;
         });
     }
     
-    renderList = () => {
-        if (this.filterData().length !== 0) {
-            return this.filterData().slice(0, this.state.limit).map((data) => (
+    getRenderList = () => {
+        if (this.getFilterData().length !== 0) {
+            return this.getFilterData().slice(0, this.state.limit).map((data) => (
                 <PostListItem 
                     key = {data.id} 
                     title = {data.title} 
@@ -59,17 +59,17 @@ export default class App extends Component {
         }
     }
     
-    loadMore = () => {
-        if (this.state.limit < this.filterData().length) {
+    onLoadMore = () => {
+        if (this.state.limit < this.getFilterData().length) {
             this.setState({
                 limit: this.state.limit + 10
             });
         } else {
-            alert("Sorry, this is end of list");
+            return alert("Sorry, this is end of list");
         }
     }
     
-    search = (event) => {
+    onSearch = (event) => {
         const { value } = event.target;
         this.setState({
             search: value 
@@ -82,13 +82,13 @@ export default class App extends Component {
                 <header>
                     <h1 className = "header"> Post List </h1>
                 </header>
-                <Search search = {this.search}/>
+                <Search onSearch = {this.onSearch}/>
                 <PostList 
-                    renderList = {this.renderList}
+                    getRenderList = {this.getRenderList}
                     isLoading = {this.state.isLoading}
                 />
                 <MoreButton 
-                    loadMore = {this.loadMore}
+                    onLoadMore = {this.onLoadMore}
                     isLoading = {this.state.isLoading}
                 />
             </div>

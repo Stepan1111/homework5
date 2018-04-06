@@ -13,7 +13,7 @@ export default class PostList extends Component {
         return (
             <div>
                 <ul className = "list">
-                    {this.props.renderList()}
+                    {this.props.getRenderList()}
                 </ul>
             </div>
         );
